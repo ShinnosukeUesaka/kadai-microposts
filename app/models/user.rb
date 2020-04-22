@@ -5,5 +5,7 @@ class User < ApplicationRecord
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
     has_secure_password
-    # the orders matter?
+    
+    has_many :microposts
+    # 順番関係あるか？
 end
