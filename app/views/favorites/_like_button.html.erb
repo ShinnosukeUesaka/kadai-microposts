@@ -1,0 +1,5 @@
+<% if current_user.liked_microposts.ids.include?(micropost.id) %>
+    <%= link_to "Unlike", favorite_path(id: micropost.id), method: :delete, class: 'btn btn-danger btn-sm' %>
+<% else %>
+    <%= link_to "Like", favorites_path(micropost_id: micropost.id), method: :create, class: 'btn btn-danger btn-sm' %>
+<% end %>
