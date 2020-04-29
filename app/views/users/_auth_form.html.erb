@@ -1,0 +1,26 @@
+<div class="text-center">
+<h3>Creating AuthUser</h3>
+</div>
+<%= form_with(model: user, local: true) do |f| %>
+  <%= hidden_field_tag :auth, 1 %>
+  
+  <div class="form-group">
+    <%= f.label :name, 'Name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, 'Email' %>
+    <%= f.email_field :email, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password, 'Password' %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :password_confirmation, 'Confirmation' %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+  </div>
+  
+        
+  <%= f.submit 'Create Authuser', class: 'btn btn-primary btn-block' %>
+  <% end %>

@@ -13,29 +13,44 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    
+    if params[:auth] == '1'
+      @auth = 1
+    else
+      @auth = 0
+    end
   end
 
   def create
-    @user = User.new(user_params)
-
-    if @user.save
-      flash[:success] = 'ユーザを登録しました。'
-      redirect_to @user
+    if params[:auth] == '1' 
+      create_auth
     else
-      flash.now[:danger] = 'ユーザの登録に失敗しました。'
-      render :new
+      
+      @user = User.new(user_params)
+  
+      if @user.save
+        flash[:success] = 'ユーザを登録しました。'
+        redirect_to @user
+      else
+        flash.now[:danger] = 'ユーザの登録に失敗しました。'
+        render :new
+      end
+    end
+    
+    def destroy
+      unless current_user == User.find(params[:id])
+        flash[:success] = '権限がありません。'
+        redirect_to root_url
+      else
+        current_user.destroy
+        flash[:success] = '退会完了。'
+        redirect_to root_url
+      end
     end
   end
   
-  def destroy
-    unless current_user == User.find(params[:id])
-      flash[:success] = '権限がありません。'
-      redirect_to root_url
-    else
-      current_user.destroy
-      flash[:success] = '退会完了。'
-      redirect_to root_url
-    end
+  def create_auth
+    return
   end
 
   #nav menues
@@ -64,4 +79,5 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
+
 end

@@ -5,51 +5,64 @@
 <div class="row">
   <div class="col-sm-6 offset-sm-3">
 
-    
-<%= form_with(model: @user, local: true) do |f| %>
-
-      
-      <div class="form-group">
+<% if @auth == 0 %>
+  <%= form_with(model: @user, local: true) do |f| %>
+  <%= hidden_field_tag :auth, 0 %>
+  
         
-<%= f.label :name, 'Name' %>
-
+        <div class="form-group">
+          
+  <%= f.label :name, 'Name' %>
+  
+          
+  <%= f.text_field :name, class: 'form-control' %>
+  
+        </div>
+  
+        <div class="form-group">
+          
+  <%= f.label :email, 'Email' %>
+  
+          
+  <%= f.email_field :email, class: 'form-control' %>
+  
+        </div>
+  
+        <div class="form-group">
+          
+  <%= f.label :password, 'Password' %>
+  
+          
+  <%= f.password_field :password, class: 'form-control' %>
+  
+        </div>
+  
+        <div class="form-group">
+          
+  <%= f.label :password_confirmation, 'Confirmation' %>
+  
+          
+  <%= f.password_field :password_confirmation, class: 'form-control' %>
+  
+        </div>
+  
         
-<%= f.text_field :name, class: 'form-control' %>
-
-      </div>
-
-      <div class="form-group">
-        
-<%= f.label :email, 'Email' %>
-
-        
-<%= f.email_field :email, class: 'form-control' %>
-
-      </div>
-
-      <div class="form-group">
-        
-<%= f.label :password, 'Password' %>
-
-        
-<%= f.password_field :password, class: 'form-control' %>
-
-      </div>
-
-      <div class="form-group">
-        
-<%= f.label :password_confirmation, 'Confirmation' %>
-
-        
-<%= f.password_field :password_confirmation, class: 'form-control' %>
-
-      </div>
-
-      
-<%= f.submit 'Sign up', class: 'btn btn-primary btn-block' %>
-
-    
+  <%= f.submit 'Sign up', class: 'btn btn-primary btn-block' %>
+  <% end %>
+  
+<% else %>
+  <%= render 'auth_form', user: @user %>
 <% end %>
+
+<p><%= link_to 'Log in', login_path %></p>
+<% if @auth == 1 %>
+    <p><%= link_to 'Create Normal User', signup_path(auth: 0) %></p>
+<% else %>
+    <p><%= link_to 'Create AuthUser', signup_path(auth: 1) %></p>
+<% end %>
+
+<%= @auth %>
+
 
   </div>
 </div>
